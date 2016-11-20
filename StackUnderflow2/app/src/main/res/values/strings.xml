@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">StackUnderflow</string>
+    <string name="title_activity_select_game">SelectGame</string>
+    <string name="title_activity_game_instance">GameInstance</string>
+</resources>
