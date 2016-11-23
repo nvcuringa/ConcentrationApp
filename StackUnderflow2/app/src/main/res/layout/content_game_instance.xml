@@ -14,10 +14,45 @@
     tools:showIn="@layout/activity_game_instance">
 
 
+    <Button
+        android:text="New Game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/thegrid"
+        android:layout_alignRight="@+id/tryagain"
+        android:layout_alignEnd="@+id/tryagain"
+        android:layout_marginBottom="144dp"
+        android:id="@+id/newgame" />
+
+    <Button
+        android:text="End Game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:id="@+id/endgame"
+        android:layout_alignBottom="@+id/thegrid"
+        android:layout_alignLeft="@+id/tryagain"
+        android:layout_alignStart="@+id/tryagain" />
+
+    <Button
+        android:text="Try Again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tryagain"
+        android:layout_marginTop="11dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
     <GridLayout
         android:layout_width="200dp"
         android:layout_height="450dp"
-        android:id="@+id/thegrid">
+        android:id="@+id/thegrid"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/newgame"
+        android:layout_toStartOf="@+id/newgame"
+        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp">
 
     </GridLayout>
 </RelativeLayout>

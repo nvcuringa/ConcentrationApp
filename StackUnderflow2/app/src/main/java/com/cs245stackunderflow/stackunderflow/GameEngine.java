@@ -31,7 +31,7 @@ public class GameEngine {
 
     public boolean isMatch(Card c1,Card c2)
     {
-        if(c1.isFaceUp() == true && c2.isFaceUp() == true && c1.getId() == c2.getId())
+        if(c1.isFaceUp() == true && c2.isFaceUp() == true && c1.getCardID() == c2.getCardID())
         {
             points+=20;
             matchCount++;
@@ -55,6 +55,16 @@ public class GameEngine {
             return false;
         }
 
+    }
+
+    public int getScore()
+    {
+        return points;
+    }
+
+    public int getAmountOfCards()
+    {
+        return amountOfCards;
     }
 
 }

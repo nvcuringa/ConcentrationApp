@@ -1,5 +1,6 @@
 package com.cs245stackunderflow.stackunderflow;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -33,7 +34,7 @@ public class Card extends Button {
      frontSide = AppCompatDrawableManager.get().getDrawable(c,id);
      backSide = AppCompatDrawableManager.get().getDrawable(c,R.drawable.card);
 
-
+        cardID = id;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             setBackground(backSide);
         }
@@ -62,6 +63,14 @@ public class Card extends Button {
             setBackground(frontSide);
             setFaceUp(true);
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public void show()
+    {
+        setBackground(frontSide);
+        setFaceUp(true);
+
     }
 
 

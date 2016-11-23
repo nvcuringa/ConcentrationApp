@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -25,9 +26,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
+import java.util.logging.Handler;
 
-public class GameInstance extends AppCompatActivity {
-
+public class GameInstance extends AppCompatActivity implements View.OnClickListener{
 
     protected GridLayout gl;
     private ArrayList<Card> theCards;
@@ -35,8 +36,15 @@ public class GameInstance extends AppCompatActivity {
     private int amount;
     private Card cardSelect1;
     private Card cardSelect2;
-    private int count;
+
     private GameEngine ge;
+    private int count;
+
+    private Button tryAgain;
+    private Button endGame;
+    private Button newGame;
+
+
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -49,6 +57,7 @@ public class GameInstance extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_game_instance);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,6 +71,7 @@ public class GameInstance extends AppCompatActivity {
             }
         });
 
+       count = 0;
 
         Intent sg = getIntent();
         amount = sg.getIntExtra("cardAmount", 0);
@@ -69,68 +79,124 @@ public class GameInstance extends AppCompatActivity {
 
         gl = (GridLayout) findViewById(R.id.thegrid);
 
+        tryAgain = (Button) findViewById(R.id.tryagain);
+        tryAgain.setOnClickListener(GameInstance.this);
+
+
+        endGame = (Button) findViewById(R.id.endgame);
+        endGame.setOnClickListener(GameInstance.this);
+
+        newGame = (Button) findViewById(R.id.newgame);
+        newGame.setOnClickListener(GameInstance.this);
+
 
         if (isCardAmountCorrect(amount)) {
             theCards = new ArrayList<Card>();
             imageID = new Stack<Integer>();
             initCards();
             addCardsToGrid();
-
         }
 
         ge = new GameEngine(amount);
 
         for(int a = 0; a < amount; a++) {
-            theCards.get(a).setOnClickListener(new View.OnClickListener() {
-
-                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                public void onClick(View v) {
-
-
-                    if(count == 0) {
-                        cardSelect1 = (Card) v;
-                        cardSelect1.flip();
-                        count++;
-                    }
-                    else if(count == 1)
-                    {
-                        cardSelect2 = (Card) v;
-                        cardSelect2.flip();
-                        count++;
-                    }
-                    else
-                    {
-                            if(ge.isMatch(cardSelect1,cardSelect2))
-                            {
-                                findCard(cardSelect1).setEnabled(false);
-                                findCard(cardSelect2).setEnabled(false);
-
-                            }
-                            else
-                            {
-                                findCard(cardSelect1).flip();
-                                findCard(cardSelect2).flip();
-                            }
-                        }
-                        count = 0;
-
-
-                }
-            });
-
-
-
-
-
-
-
+                 theCards.get(a).setOnClickListener(GameInstance.this);
 
         }
 
 
 
 
-}
+
+                            }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @Override
+    public void onClick(View v) {
+
+
+             if(v.getId()== R.id.tryagain && !(ge.isOver()))
+             {
+                 if(cardSelect1 != null) {
+                     cardSelect1.flip();
+                     cardSelect1 = null;
+                 }
+
+                 if(cardSelect2 != null) {
+                     cardSelect2.flip();
+                     cardSelect2 = null;
+                 }
+                 return;
+             }
+
+            if(v.getId()== R.id.endgame && !(ge.isOver())) {
+
+                for(int i = 0; i < amount; i++) {
+                    theCards.get(i).show();
+                    theCards.get(i).setEnabled(false);
+
+                }
+                return;
+            }
+
+            if(v.getId()== R.id.newgame)
+            {
+               Intent i = getIntent();
+                finish();
+                startActivity(i);
+                return;
+            }
+
+
+
+                Card c = (Card) v;
+
+
+
+             if(cardSelect1 == null)
+             {
+                 cardSelect1 = c;
+                 cardSelect1.flip();
+                 return;
+             }
+
+             if(cardSelect2 == null)
+             {
+                 cardSelect2 = c;
+                 cardSelect2.flip();
+
+
+
+             }
+
+             if(ge.isMatch(cardSelect1,cardSelect2))
+             {
+
+                 cardSelect1.setEnabled(false);
+                 cardSelect2.setEnabled(false);
+
+                 cardSelect1 = null;
+                 cardSelect2 = null;
+             }
+
+
+        if(ge.isOver())
+        {
+            //Call ge.getAmountOfCards() to get card game type
+            //Call ge.getScore() to get score
+            //HighScore code
+            //Create a new class highscore and instantiate here.
+        }
+
+
+    }
+
+
+
+
+
+
+
 
     protected Card findCard(Card c)
     {
@@ -163,6 +229,7 @@ public class GameInstance extends AppCompatActivity {
         } else if (amount == 4) {
             gl.setRowCount(2);
             gl.setColumnCount(2);
+
         }
 
 
