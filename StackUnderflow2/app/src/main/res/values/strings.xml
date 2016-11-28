@@ -2,4 +2,5 @@
     <string name="app_name">StackUnderflow</string>
     <string name="title_activity_select_game">SelectGame</string>
     <string name="title_activity_game_instance">GameInstance</string>
+    <string name="title_activity_high_score_view">HighScoreView</string>
 </resources>

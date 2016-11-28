@@ -33,13 +33,15 @@ public class GameEngine {
     {
         if(c1.isFaceUp() == true && c2.isFaceUp() == true && c1.getCardID() == c2.getCardID())
         {
-            points+=20;
+            points+=2;
             matchCount++;
             return true;
         }
         else
         {
-            points -= 10;
+            if (points > 0) {
+                points -= 1;
+            }
             return false;
         }
     }

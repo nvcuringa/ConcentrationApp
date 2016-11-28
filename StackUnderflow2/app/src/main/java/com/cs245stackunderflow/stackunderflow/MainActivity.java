@@ -9,6 +9,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private Button mInitialPlay;
+    private Button mHighScore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,7 +18,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-          mInitialPlay = (Button)findViewById(R.id.initplay);
+        mInitialPlay = (Button)findViewById(R.id.initplay);
+        mHighScore = (Button)findViewById(R.id.highScoreButton);
+
+        mHighScore.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View v)
+            {
+                Intent sg = new Intent(MainActivity.this,HighScoreView.class);
+                startActivity(sg);
+
+
+            }
+        });
 
         mInitialPlay.setOnClickListener(new View.OnClickListener(){
 

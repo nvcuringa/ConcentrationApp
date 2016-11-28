@@ -1,6 +1,8 @@
 package com.cs245stackunderflow.stackunderflow;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -8,23 +10,37 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 import java.util.Stack;
 import java.util.logging.Handler;
 
@@ -43,6 +59,16 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
     private Button tryAgain;
     private Button endGame;
     private Button newGame;
+
+
+    private String[] names = new String[3];
+    private String[] scores = new String[3];
+    ArrayList<String> list = new ArrayList<String>(3);
+    private static Context context;
+
+    private TextView highScore;
+
+    private Intent hs;
 
 
 
@@ -178,7 +204,7 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
                  cardSelect1 = null;
                  cardSelect2 = null;
              }
-
+        updateTextView();
 
         if(ge.isOver())
         {
@@ -186,12 +212,160 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
             //Call ge.getScore() to get score
             //HighScore code
             //Create a new class highscore and instantiate here.
+            try {
+                checkNewHighScore();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+
+
         }
 
 
     }
 
+    public void checkNewHighScore() throws FileNotFoundException {
+        try {
+            int gametype = ge.getAmountOfCards();
+            String file = "highscores" + gametype + ".txt";
+            Scanner inputFile = new Scanner(getAssets().open(file));
+            String temp = "";
+            int index = 0;
+            while (inputFile.hasNextLine()) {
+                temp = (inputFile.nextLine());
+                int i = 0;
+                //System.out.println(temp);
+                for (char c : temp.toCharArray()) {
+                    if (c == '.') {
+                        if (index > 4) {
+                            index = 4;
+                        }
+                        names[index] = temp.substring(0, i);
+                        scores[index] = temp.substring(i + 4, temp.length());
+                        list.add(names[index] + "...." + scores[index]);
+                        //System.out.println(names[index] + "...." + scores[index]);
+                        index++;
+                        break;
+                    }
+                    i++;
+                }
+            }
+        } catch (IOException e) {}
 
+        sortArrays();
+        int smallest = Integer.parseInt(scores[2]);
+        for (String i : scores) {
+            if (Integer.parseInt(i) <= smallest) {
+                smallest = Integer.parseInt(i);
+            }
+        }
+        if (ge.getScore() > smallest) {
+            //String name = JOptionPane.showInputDialog(null, "Enter The Name You Want To Display In HighScores", "NEW HIGH SCORE", JOptionPane.QUESTION_MESSAGE);
+
+            //final String[] name = new String[1];
+            final EditText txtUrl = new EditText(this);
+            new AlertDialog.Builder(this)
+                    .setTitle("New Highscore!!")
+                    .setMessage("Enter your username")
+                    .setView(txtUrl)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String name = txtUrl.getText().toString();
+                            try {
+                                saveFile(name);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        }
+                    })
+                    .show();
+        }
+    }
+    public void saveFile(String input) throws FileNotFoundException {
+        GameInstance.context = getApplicationContext();
+        //Context context = GameInstance.instance.getApplicationContext();
+        int gametype = ge.getAmountOfCards();
+        String file = "highscores" + gametype + ".txt";
+
+        scores[2] = ge.getScore() + "";
+        names[2] = input;
+        sortArrays();
+        list.clear();
+        for (int i = 0; i < scores.length; i++) {
+            list.add(names[i] + "...." + scores[i]);
+        }
+
+        try {
+            FileOutputStream outputStream = openFileOutput(file, Context.MODE_PRIVATE);
+                        for (String j : list) {
+            outputStream.write(j.getBytes());
+            }
+
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+///////////// FOR HIGHSCORE BUTTON ///////////
+        try {
+            FileInputStream inputStream = openFileInput(file);
+            BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder total = new StringBuilder();
+            String line;
+            while ((line = r.readLine()) != null) {
+                total.append(line);
+
+            }
+            r.close();
+            inputStream.close();
+
+            // display to screen
+            //System.out.println(total);
+
+
+
+            hs = new Intent(GameInstance.this, HighScoreView.class);
+            hs.putExtra("theHighScore", total.toString());
+
+            Log.d("File", "File contents: " + total);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //////////////////////
+
+        startActivity(hs);
+
+    }
+
+
+    public void sortArrays() {
+        int largest = Integer.parseInt(scores[0]), index = 0, tempNum = 0;
+        String temp = "";
+
+        for (int i = 0; i < names.length; i++) {
+            index = i;
+            largest = Integer.parseInt(scores[i]);
+            for (int j = i; j < names.length; j++) {
+                if (Integer.parseInt(scores[j]) > largest) {
+                    largest = Integer.parseInt(scores[j]);
+                    index = j;
+                    //System.out.println("Largest : " + largest + "index = " + index);
+                }
+            }
+            //System.out.println("swapping");
+            temp = names[i];
+            names[i] = names[index];
+            names[index] = temp;
+            tempNum = Integer.parseInt(scores[i]);
+            scores[i] = scores[index];
+            scores[index] = tempNum + "";
+        }
+    }
+    //////////////////
 
 
 
@@ -281,6 +455,11 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
         else
             return false;
 
+    }
+
+    public void updateTextView() {
+        TextView textView = (TextView) findViewById(R.id.scoreBox);
+        textView.setText(ge.getScore()+"");
     }
 
 }

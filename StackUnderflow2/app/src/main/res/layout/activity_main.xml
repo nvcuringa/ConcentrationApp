@@ -31,4 +31,14 @@
         android:layout_marginTop="105dp"
         android:id="@+id/initplay" />
 
+    <Button
+        android:text="HighScores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:id="@+id/highScoreButton"
+        android:layout_below="@+id/initplay"
+        android:layout_alignRight="@+id/titleOfGame"
+        android:layout_alignEnd="@+id/titleOfGame" />
+
 </RelativeLayout>
