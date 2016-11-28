@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -178,7 +179,7 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
                  cardSelect1 = null;
                  cardSelect2 = null;
              }
-
+        updateTextView();
 
         if(ge.isOver())
         {
@@ -281,6 +282,11 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
         else
             return false;
 
+    }
+
+    public void updateTextView() {
+        TextView textView = (TextView) findViewById(R.id.scoreBox);
+        textView.setText(ge.getScore()+"");
     }
 
 }
