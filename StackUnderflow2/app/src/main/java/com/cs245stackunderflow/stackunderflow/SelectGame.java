@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class SelectGame extends AppCompatActivity {
 
@@ -36,13 +38,28 @@ public class SelectGame extends AppCompatActivity {
         numberOfCards = (EditText) findViewById(R.id.enteramount);
         continueButton = (Button) findViewById(R.id.continuebutton);
 
+        numberOfCards.addTextChangedListener(new TextValidator(numberOfCards) {
+            @Override
+            public void validate(TextView textView, String text) {
+                if (Integer.parseInt(numberOfCards.getText().toString()) % 2 != 0) {
+                    numberOfCards.setError("Enter an even number");
+                }
+                if (Integer.parseInt(numberOfCards.getText().toString()) < 4 || Integer.parseInt(numberOfCards.getText().toString()) > 20) {
+                    numberOfCards.setError("Enter an even number between 4 and 20");
+                }
+            }
+        });
+
         continueButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-
-                Intent gi = new Intent(SelectGame.this,GameInstance.class);
+            if (Integer.parseInt(numberOfCards.getText().toString()) % 2 == 0
+                    && Integer.parseInt(numberOfCards.getText().toString()) >= 4
+                    && Integer.parseInt(numberOfCards.getText().toString()) <= 20) {
+                Intent gi = new Intent(SelectGame.this, GameInstance.class);
                 gi.putExtra("cardAmount", Integer.parseInt(numberOfCards.getText().toString()));
                 startActivity(gi);
+            }
             }
         });
     }
