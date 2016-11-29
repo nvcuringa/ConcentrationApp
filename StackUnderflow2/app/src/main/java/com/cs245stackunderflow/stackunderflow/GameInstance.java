@@ -44,6 +44,9 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.logging.Handler;
 
+import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
+import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+
 public class GameInstance extends AppCompatActivity implements View.OnClickListener{
 
     protected GridLayout gl;
@@ -86,7 +89,6 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_game_instance);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Concentration");
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -320,8 +322,6 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
             while ((line = r.readLine()) != null) {
                 total.append(line);
 
-
-
             }
             r.close();
             inputStream.close();
@@ -391,22 +391,51 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
 
 
     protected void addCardsToGrid() {
-        if (amount == 20 || amount == 18) {
-            gl.setRowCount(5);
-            gl.setColumnCount(4);
-        } else if (amount == 16 || amount == 14) {
-            gl.setRowCount(4);
-            gl.setColumnCount(4);
-        } else if (amount == 12 || amount == 10) {
-            gl.setRowCount(4);
-            gl.setColumnCount(3);
-        } else if (amount == 8 || amount == 6) {
-            gl.setRowCount(3);
-            gl.setColumnCount(3);
-        } else if (amount == 4) {
-            gl.setRowCount(2);
-            gl.setColumnCount(2);
-
+        int orientation = gl.getResources().getConfiguration().orientation;
+        if (orientation == ORIENTATION_PORTRAIT) {
+            if (amount == 20 || amount == 18) {
+                gl.setRowCount(5);
+                gl.setColumnCount(4);
+            } else if (amount == 16 || amount == 14) {
+                gl.setRowCount(4);
+                gl.setColumnCount(4);
+            } else if (amount == 12 || amount == 10) {
+                gl.setRowCount(4);
+                gl.setColumnCount(3);
+            } else if (amount == 8 || amount == 6) {
+                gl.setRowCount(3);
+                gl.setColumnCount(3);
+            } else if (amount == 4) {
+                gl.setRowCount(2);
+                gl.setColumnCount(2);
+            }
+        }
+        if (orientation == ORIENTATION_LANDSCAPE) {
+            if (amount == 20) {
+                gl.setRowCount(3);
+                gl.setColumnCount(7);
+            } else if (amount == 18) {
+                gl.setRowCount(3);
+                gl.setColumnCount(6);
+            } else if (amount == 16) {
+                gl.setRowCount(3);
+                gl.setColumnCount(6);
+            } else if (amount == 14) {
+                gl.setRowCount(3);
+                gl.setColumnCount(5);
+            } else if (amount == 12 || amount == 10) {
+                gl.setRowCount(3);
+                gl.setColumnCount(4);
+            } else if (amount == 8) {
+                gl.setRowCount(3);
+                gl.setColumnCount(3);
+            } else if (amount == 6) {
+                gl.setRowCount(3);
+                gl.setColumnCount(2);
+            } else if (amount == 4) {
+                gl.setRowCount(2);
+                gl.setColumnCount(2);
+            }
         }
 
 
