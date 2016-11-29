@@ -47,6 +47,7 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.logging.Handler;
 
+import static android.R.attr.name;
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
@@ -93,9 +94,9 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-<<<<<<< HEAD
+
         share = this.getSharedPreferences("sp", Context.MODE_PRIVATE);
-=======
+
         //music will start when user presses the button
         musicClick = (Button)findViewById(R.id.musicBtn);
         musicClick.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +107,7 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
         });
 
        count = 0;
->>>>>>> origin/master
+
 
         Intent sg = getIntent();
         amount = sg.getIntExtra("cardAmount", 0);
@@ -228,31 +229,22 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
         edit.putInt(Integer.toString(ge.getAmountOfCards())+" "+input,ge.getScore());
         edit.commit();
 
-<<<<<<< HEAD
+
 
         Map<String,?> keys = share.getAll();
 
         int cardA = 0;
         String name ="";
         String score = "";
-=======
-            }
-            r.close();
-            inputStream.close();
 
-            // display to screen
-            //System.out.println(total);
->>>>>>> origin/master
 
         ArrayList<HighScores> h = new ArrayList<HighScores>();
 
-       for (Map.Entry<String,?> entry : keys.entrySet())
+       for(Map.Entry<String,?> entry: keys.entrySet())
        {
-
            cardA = Integer.parseInt(entry.getKey().split("\\s+")[0]);
            name = entry.getKey().split("\\s+")[1];
            score = Integer.toString((Integer)entry.getValue());
-
 
            if(cardA == ge.getAmountOfCards())
            {
@@ -381,24 +373,4 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-}
-
-
-class MusicPlayer {
-    //makes 1 musicplayer that will be used. no other instance will be created from orientation change
-    MediaPlayer player;
-    private static volatile MusicPlayer instance = null;
-    private MusicPlayer() { }
-
-    public static MusicPlayer getInstance() {
-        if (instance == null){
-
-            synchronized (MusicPlayer.class){
-                if (instance == null){
-                    instance = new MusicPlayer();
-                }
-            }
-        }
-        return instance;
-    }
 }
