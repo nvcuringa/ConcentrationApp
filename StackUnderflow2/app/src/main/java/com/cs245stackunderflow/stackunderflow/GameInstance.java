@@ -86,6 +86,7 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_game_instance);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Concentration");
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -318,6 +319,8 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
             String line;
             while ((line = r.readLine()) != null) {
                 total.append(line);
+
+
 
             }
             r.close();
