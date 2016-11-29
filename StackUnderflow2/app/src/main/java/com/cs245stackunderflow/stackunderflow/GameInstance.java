@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -74,6 +75,9 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
     private Intent hs;
 
 
+    private Button musicClick;
+    MusicPlayer music = MusicPlayer.getInstance();
+
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -91,12 +95,12 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //music will start when user presses the button
+        musicClick = (Button)findViewById(R.id.musicBtn);
+        musicClick.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                startMusic();
             }
         });
 
@@ -494,4 +498,35 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
         textView.setText(ge.getScore()+"");
     }
 
+    public void startMusic(){
+        if(music.player==null) {
+            music.player = MediaPlayer.create(GameInstance.this, R.raw.background);
+            music.player.start();
+        } else if(music.player != null && music.player.isPlaying()){
+            music.player.stop();
+            music.player.release();
+            music.player = null;
+        }
+    }
+
+}
+
+
+class MusicPlayer {
+    //makes 1 musicplayer that will be used. no other instance will be created from orientation change
+    MediaPlayer player;
+    private static volatile MusicPlayer instance = null;
+    private MusicPlayer() { }
+
+    public static MusicPlayer getInstance() {
+        if (instance == null){
+
+            synchronized (MusicPlayer.class){
+                if (instance == null){
+                    instance = new MusicPlayer();
+                }
+            }
+        }
+        return instance;
+    }
 }
