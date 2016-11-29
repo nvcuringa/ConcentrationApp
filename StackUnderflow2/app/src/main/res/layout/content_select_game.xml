@@ -14,44 +14,44 @@
     tools:showIn="@layout/activity_select_game">
 
     <TextView
-        android:text="Please enter and even number from 4 to 20."
+        android:text="How many Cards?"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="115dp"
-        android:id="@+id/even"
+        android:id="@+id/cardsamount"
+        android:textSize="24sp"
         android:layout_alignParentTop="true"
-        android:textSize="18sp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="13dp"
         android:id="@+id/enteramount"
         android:hint="Enter Amount"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_below="@+id/even"
-        android:layout_alignRight="@+id/even"
-        android:layout_alignEnd="@+id/even"
-        android:layout_marginRight="35dp"
-        android:layout_marginEnd="35dp" />
-
-    <TextView
-        android:text="How many Cards?"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/enteramount"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="41dp"
-        android:id="@+id/cardsamount"
-        android:textSize="24sp" />
+        android:layout_alignLeft="@+id/cardsamount"
+        android:layout_alignStart="@+id/cardsamount" />
 
     <Button
         android:text="Continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:id="@+id/continuebutton"
         android:layout_below="@+id/enteramount"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
-        android:id="@+id/continuebutton" />
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Please enter an even number from 4 to 20."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:id="@+id/even"
+        android:layout_below="@+id/cardsamount"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
