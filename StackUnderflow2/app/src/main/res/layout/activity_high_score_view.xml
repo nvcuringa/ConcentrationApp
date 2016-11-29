@@ -9,10 +9,12 @@
 
     <TextView
         android:text="TextView"
-        android:layout_width="213dp"
-        android:layout_height="218dp"
+        android:layout_width="304dp"
+        android:layout_height="259dp"
         android:id="@+id/viewhs"
-        android:layout_gravity="center_vertical|center_horizontal" />
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:typeface="normal"
+        android:textSize="10dp" />
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

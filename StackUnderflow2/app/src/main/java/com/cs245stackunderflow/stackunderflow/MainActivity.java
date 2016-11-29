@@ -15,23 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
         mInitialPlay = (Button)findViewById(R.id.initplay);
-        mHighScore = (Button)findViewById(R.id.highScoreButton);
-
-        mHighScore.setOnClickListener(new View.OnClickListener(){
-
-            public void onClick(View v)
-            {
-                Intent sg = new Intent(MainActivity.this,HighScoreView.class);
-                startActivity(sg);
-
-
-            }
-        });
-
         mInitialPlay.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v)

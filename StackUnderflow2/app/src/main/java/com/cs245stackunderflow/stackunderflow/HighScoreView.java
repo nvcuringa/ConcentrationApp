@@ -14,13 +14,13 @@ public class HighScoreView extends AppCompatActivity {
 
     private TextView highScore;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_high_score_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
 
 
 
@@ -31,7 +31,7 @@ public class HighScoreView extends AppCompatActivity {
 
 
        highScore.setText(str);
-       highScore.setTextSize(20);
+       highScore.setTextSize(30);
 
        toolbar.setTitle("HighScores");
 
