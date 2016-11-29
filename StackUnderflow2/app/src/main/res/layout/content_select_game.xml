@@ -23,20 +23,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:layout_marginTop="13dp"
-        android:id="@+id/enteramount"
-        android:hint="Enter Amount"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_below="@+id/even"
-        android:layout_alignLeft="@+id/cardsamount"
-        android:layout_alignStart="@+id/cardsamount" />
-
     <Button
         android:text="Continue"
         android:layout_width="wrap_content"
@@ -53,5 +39,16 @@
         android:layout_marginTop="24dp"
         android:id="@+id/even"
         android:layout_below="@+id/cardsamount"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:layout_marginTop="15dp"
+        android:id="@+id/enteramount"
+        android:hint="Enter Amount"
+        android:layout_below="@+id/even"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
