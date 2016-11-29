@@ -1,3 +1,15 @@
+/***************************************************************
+ * file: Card.java
+ * author: Nick Curinga, Devin Wells, Caesar Pedroza, Tuan
+ * class: CS 245
+ – Programming Graphical User Interfaces
+ *
+ * assignment: Android App
+ * date last modified: 11/29/2016
+ *
+ * purpose: This class is a card.
+ ****************************************************************/
+
 package com.cs245stackunderflow.stackunderflow;
 
 import android.annotation.TargetApi;
@@ -10,10 +22,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.widget.AppCompatDrawableManager;
 import android.widget.Button;
 import android.widget.GridLayout;
-
-/**
- * Created by Nick on 11/16/2016.
- */
 
 public class Card extends Button {
 

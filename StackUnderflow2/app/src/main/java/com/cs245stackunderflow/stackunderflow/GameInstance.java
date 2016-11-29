@@ -1,3 +1,14 @@
+/***************************************************************
+ * file: GameInstance.java
+ * author: Nick Curinga, Devin Wells, Caesar Pedroza, Tuan
+ * class: CS 245
+ – Programming Graphical User Interfaces
+ *
+ * assignment: Android App
+ * date last modified: 11/29/2016
+ *
+ * purpose: This class uses GameEngine and Card to run the game.
+ ****************************************************************/
 package com.cs245stackunderflow.stackunderflow;
 
 import android.annotation.TargetApi;
@@ -67,23 +78,19 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
     private Button endGame;
     private Button newGame;
 
-
     private static Context context;
     private TextView highScore;
     private Intent hs;
     private SharedPreferences share;
 
-
     private Button musicClick;
     MusicPlayer music = MusicPlayer.getInstance();
-
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
-
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
@@ -93,7 +100,6 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_game_instance);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         share = this.getSharedPreferences("sp", Context.MODE_PRIVATE);
 
@@ -106,8 +112,7 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-       count = 0;
-
+        count = 0;
 
         Intent sg = getIntent();
         amount = sg.getIntExtra("cardAmount", 0);
@@ -200,8 +205,6 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
         {
             checkNewHighScore();
         }
-
-
     }
 
     public void checkNewHighScore() {

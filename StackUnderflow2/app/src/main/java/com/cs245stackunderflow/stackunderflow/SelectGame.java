@@ -1,3 +1,15 @@
+/***************************************************************
+ * file: SelectGame.java
+ * author: Nick Curinga, Devin Wells, Caesar Pedroza, Tuan Pham
+ * class: CS 245
+ – Programming Graphical User Interfaces
+ *
+ * assignment: Android App
+ * date last modified: 11/29/2016
+ *
+ * purpose: This class selects how many cards to play with.
+ ****************************************************************/
+
 package com.cs245stackunderflow.stackunderflow;
 
 import android.content.Intent;
