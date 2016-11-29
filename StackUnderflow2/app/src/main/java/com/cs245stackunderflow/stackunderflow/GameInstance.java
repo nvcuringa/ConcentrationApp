@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -46,6 +47,9 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.logging.Handler;
 
+import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
+import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+
 public class GameInstance extends AppCompatActivity implements View.OnClickListener{
 
     protected GridLayout gl;
@@ -69,6 +73,9 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
     private SharedPreferences share;
 
 
+    private Button musicClick;
+    MusicPlayer music = MusicPlayer.getInstance();
+
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -84,10 +91,22 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_game_instance);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Concentration");
         setSupportActionBar(toolbar);
 
+<<<<<<< HEAD
         share = this.getSharedPreferences("sp", Context.MODE_PRIVATE);
+=======
+        //music will start when user presses the button
+        musicClick = (Button)findViewById(R.id.musicBtn);
+        musicClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMusic();
+            }
+        });
+
+       count = 0;
+>>>>>>> origin/master
 
         Intent sg = getIntent();
         amount = sg.getIntExtra("cardAmount", 0);
@@ -209,12 +228,21 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
         edit.putInt(Integer.toString(ge.getAmountOfCards())+" "+input,ge.getScore());
         edit.commit();
 
+<<<<<<< HEAD
 
         Map<String,?> keys = share.getAll();
 
         int cardA = 0;
         String name ="";
         String score = "";
+=======
+            }
+            r.close();
+            inputStream.close();
+
+            // display to screen
+            //System.out.println(total);
+>>>>>>> origin/master
 
         ArrayList<HighScores> h = new ArrayList<HighScores>();
 
@@ -252,22 +280,51 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
 
 
     protected void addCardsToGrid() {
-        if (amount == 20 || amount == 18) {
-            gl.setRowCount(5);
-            gl.setColumnCount(4);
-        } else if (amount == 16 || amount == 14) {
-            gl.setRowCount(4);
-            gl.setColumnCount(4);
-        } else if (amount == 12 || amount == 10) {
-            gl.setRowCount(4);
-            gl.setColumnCount(3);
-        } else if (amount == 8 || amount == 6) {
-            gl.setRowCount(3);
-            gl.setColumnCount(3);
-        } else if (amount == 4) {
-            gl.setRowCount(2);
-            gl.setColumnCount(2);
-
+        int orientation = gl.getResources().getConfiguration().orientation;
+        if (orientation == ORIENTATION_PORTRAIT) {
+            if (amount == 20 || amount == 18) {
+                gl.setRowCount(5);
+                gl.setColumnCount(4);
+            } else if (amount == 16 || amount == 14) {
+                gl.setRowCount(4);
+                gl.setColumnCount(4);
+            } else if (amount == 12 || amount == 10) {
+                gl.setRowCount(4);
+                gl.setColumnCount(3);
+            } else if (amount == 8 || amount == 6) {
+                gl.setRowCount(3);
+                gl.setColumnCount(3);
+            } else if (amount == 4) {
+                gl.setRowCount(2);
+                gl.setColumnCount(2);
+            }
+        }
+        if (orientation == ORIENTATION_LANDSCAPE) {
+            if (amount == 20) {
+                gl.setRowCount(3);
+                gl.setColumnCount(7);
+            } else if (amount == 18) {
+                gl.setRowCount(3);
+                gl.setColumnCount(6);
+            } else if (amount == 16) {
+                gl.setRowCount(3);
+                gl.setColumnCount(6);
+            } else if (amount == 14) {
+                gl.setRowCount(3);
+                gl.setColumnCount(5);
+            } else if (amount == 12 || amount == 10) {
+                gl.setRowCount(3);
+                gl.setColumnCount(4);
+            } else if (amount == 8) {
+                gl.setRowCount(3);
+                gl.setColumnCount(3);
+            } else if (amount == 6) {
+                gl.setRowCount(3);
+                gl.setColumnCount(2);
+            } else if (amount == 4) {
+                gl.setRowCount(2);
+                gl.setColumnCount(2);
+            }
         }
 
 
@@ -313,4 +370,35 @@ public class GameInstance extends AppCompatActivity implements View.OnClickListe
         textView.setText(ge.getScore()+"");
     }
 
+    public void startMusic(){
+        if(music.player==null) {
+            music.player = MediaPlayer.create(GameInstance.this, R.raw.background);
+            music.player.start();
+        } else if(music.player != null && music.player.isPlaying()){
+            music.player.stop();
+            music.player.release();
+            music.player = null;
+        }
+    }
+
+}
+
+
+class MusicPlayer {
+    //makes 1 musicplayer that will be used. no other instance will be created from orientation change
+    MediaPlayer player;
+    private static volatile MusicPlayer instance = null;
+    private MusicPlayer() { }
+
+    public static MusicPlayer getInstance() {
+        if (instance == null){
+
+            synchronized (MusicPlayer.class){
+                if (instance == null){
+                    instance = new MusicPlayer();
+                }
+            }
+        }
+        return instance;
+    }
 }
